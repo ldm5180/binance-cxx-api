@@ -1,7 +1,7 @@
 /*
 	Author: tensaix2j
 	Date  : 2017/10/15
-	
+
 	C++ library for Binance API.
 */
 
@@ -10,13 +10,13 @@
 
 #include <atomic>
 #include <libwebsockets.h>
-#include <map>
+#include <unordered_map>
 
 using namespace binance;
 using namespace std;
 
 static lws_context* context = NULL;
-static map<lws*, CB> handles;
+static unordered_map<lws*, CB> handles;
 
 static atomic<int> lws_service_cancelled(0);
 
@@ -35,18 +35,19 @@ static int event_cb(lws *wsi, enum lws_callback_reasons reason, void *user, void
 			{
 				string str_result = string(reinterpret_cast<char*>(in), len);
 				Json::Reader reader;
-				Json::Value json_result;	
+				Json::Value json_result;
 				reader.parse(str_result , json_result);
 
 				if (handles.find(wsi) != handles.end())
 					handles[wsi](json_result);
+
 			}
 			catch (exception &e)
 			{
 		 		Logger::write_log("<binance::Websocket::event_cb> Error parsing incoming message : %s\n", e.what());
 		 		return 1;
 			}
-		}   	
+		}
 		break;
 
 	case LWS_CALLBACK_CLIENT_WRITEABLE :
@@ -99,7 +100,7 @@ const lws_protocols protocols[] =
 		.per_session_data_size = 0,
 		.rx_buffer_size = 65536,
 	},
-	
+
 	{ NULL, NULL, 0, 0 } /* end */
 };
 
@@ -125,7 +126,7 @@ void binance::Websocket::connect_endpoint(CB cb, const char* path)
 {
 	char ws_path[1024];
 	strcpy(ws_path, path);
-	
+
 	// Connect if we are not connected to the server.
 	lws_client_connect_info ccinfo = { 0 };
 	ccinfo.context 	= context;
@@ -158,4 +159,3 @@ void binance::Websocket::enter_event_loop(std::chrono::hours hours)
 
 	lws_context_destroy(context);
 }
-

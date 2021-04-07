@@ -6,7 +6,7 @@ set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 1)
 set(PROJECT_VERSION_PATCH 0)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 
 # Search path for CMake include files.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -83,4 +83,3 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_executable(example example.cpp)
 target_include_directories(example PRIVATE "${JSONCPP_INCLUDE_DIRS}")
 target_link_libraries(example ${PROJECT_NAME})
-

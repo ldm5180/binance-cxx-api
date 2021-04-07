@@ -122,7 +122,7 @@ namespace binance
 
 	class Server
 	{
-		std::string hostname = "https://api.binance.us";
+		std::string hostname = "https://api.binance.com";
 		bool simulation = false;
 		std::string sessionId;
 

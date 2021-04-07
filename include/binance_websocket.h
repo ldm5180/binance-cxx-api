@@ -8,17 +8,20 @@
 #ifndef BINANCE_WEBSOCKET_H
 #define BINANCE_WEBSOCKET_H
 
+#include "inplace_function.hpp"
+
 #include <json/json.h>
+
 #include <chrono>
 
-#define BINANCE_WS_HOST "stream.binance.us"
+#define BINANCE_WS_HOST "stream.binance.com"
 #define BINANCE_WS_PORT 9443
 
 namespace binance
 {
-	typedef int (*CB)( Json::Value &json_value );
+        using CB = stdext::inplace_function<int(Json::Value&)>;
 
-	class Websocket
+        class Websocket
 	{
 	public :
 		static void connect_endpoint(CB user_cb, const char* path);
