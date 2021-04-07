@@ -16,7 +16,7 @@ map<long, map<string, double> > klinesCache;
 static void print_klinesCache()
 {
 	cout << "==================================" << endl;
-	
+
 	for (map<long, map<string, double> >::iterator it_i = klinesCache.begin();
 		it_i != klinesCache.end(); it_i++)
 	{
@@ -34,16 +34,16 @@ static void print_klinesCache()
 }
 
 static int ws_klines_onData(Json::Value& json_result)
-{	
+{
 	long start_of_candle = json_result["k"]["t"].asInt64();
 	klinesCache[start_of_candle]["o"] = atof(json_result["k"]["o"].asString().c_str());
 	klinesCache[start_of_candle]["h"] = atof(json_result["k"]["h"].asString().c_str());
 	klinesCache[start_of_candle]["l"] = atof(json_result["k"]["l"].asString().c_str());
 	klinesCache[start_of_candle]["c"] = atof(json_result["k"]["c"].asString().c_str());
 	klinesCache[start_of_candle]["v"] = atof(json_result["k"]["v"].asString().c_str());
-	
+
 	print_klinesCache();
-	
+
 	return 0;
 }
 
@@ -55,9 +55,9 @@ int main()
 	Json::Value result;
 
 	Server server;
-	
+
 	Market market(server);
-		
+
 	// Klines / CandleStick
 	BINANCE_ERR_CHECK(market.getKlines(result, "POEBTC", "1h", 0, 0, 10));
 
@@ -72,12 +72,11 @@ int main()
  	}
 
  	print_klinesCache();
- 		
+
  	// Klines/Candlestick update via websocket
  	Websocket::init();
- 	Websocket::connect_endpoint(ws_klines_onData, "/ws/poebtc@kline_1m"); 
+ 	Websocket::connect_endpoint(ws_klines_onData, "/ws/poebtc@kline_1m");
 	Websocket::enter_event_loop();
-	
+
 	return 0;
 }
-

@@ -122,17 +122,17 @@ namespace binance
 
 	class Server
 	{
-		const std::string hostname;
-		const bool simulation;
+		std::string hostname = "https://api.binance.us";
+		bool simulation = false;
 		std::string sessionId;
 
 	public :
+                Server() = default;
+                Server(const char* hostname, bool simulation);
 
-		Server(const char* hostname = "https://api.binance.com", bool simulation = false);
-		
 		const std::string& getHostname() const;
 		bool isSimulator() const;
-		
+
 		binanceError_t getTime(Json::Value &json_result);
 		binanceError_t setTime(const time_t time, unsigned int scale = 1);
 
@@ -181,7 +181,7 @@ namespace binance
 	{
 		const std::string& hostname;
 		const Server& server;
-		
+
 		std::string api_key, secret_key;
 
 	public :
@@ -245,4 +245,3 @@ namespace binance
 }
 
 #endif // BINANCE_H
-
