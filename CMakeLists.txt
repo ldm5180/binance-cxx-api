@@ -72,7 +72,7 @@ set(LIBWEBSOCKETS_INCLUDE_DIRS
 
 file(GLOB_RECURSE LIBRARY_SRC "src/*.cpp" "include/*.h")
 
-add_library(${PROJECT_NAME} SHARED ${LIBRARY_SRC})
+add_library(${PROJECT_NAME} STATIC ${LIBRARY_SRC})
 target_include_directories(${PROJECT_NAME} PRIVATE "${LIBWEBSOCKETS_INCLUDE_DIRS}")
 target_include_directories(${PROJECT_NAME} PRIVATE "${JSONCPP_INCLUDE_DIRS}")
 target_include_directories(${PROJECT_NAME} PRIVATE "${MBEDTLS_INCLUDE_DIRS}")
