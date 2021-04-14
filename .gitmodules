@@ -6,7 +6,7 @@
 	url = https://github.com/ARMmbed/mbedtls.git
 [submodule "ThirdParty/libwebsockets"]
 	path = ThirdParty/libwebsockets
-	url = https://github.com/dmikushin/libwebsockets.git
+	url = https://github.com/ldm5180/libwebsockets.git
 [submodule "ThirdParty/curl"]
 	path = ThirdParty/curl
 	url = https://github.com/curl/curl.git
